@@ -33,10 +33,10 @@ class Dinosaur {
 
 //! TODO: Fix facts in human class to display correct and set default parameter
 class Human {
-    constructor(height, weight, diet, facts = "You") {
+    constructor(height, weight, diet, facts) {
 
         this.species = "Human";
-        this.facts = facts;
+        this.facts = "You";
         this.height = height;
         this.weight = weight;
         this.diet = diet;
@@ -52,9 +52,10 @@ const humanObject = (function () {
     let weight = document.getElementById("weight").value;
     let diet = document.getElementById("diet").value;
 
-    return new Human(facts, height, weight, diet)
+    return new Human(height, weight, diet, facts)
 
 })();
+console.log(humanObject.facts)
 
 console.log(humanObject);
 
@@ -81,7 +82,10 @@ console.log(humanObject);
 
 
 
-// TODO: Remove form from screen
+// Remove form from screen
+document.getElementById("btn").addEventListener("click", (event) => {
+    document.getElementById("dino-compare").innerHTML = "";
+})
 
 
 // On button click, prepare and display info graphic
