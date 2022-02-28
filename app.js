@@ -77,14 +77,16 @@ const humanObject = (function () {
 
 
 // Remove form from screen
-document.getElementById("btn").addEventListener("click", () => {
-    document.getElementById("dino-compare").innerHTML = "";
-})
+
 
 
 // On button click, prepare and display info graphic
 
 document.getElementById("btn").addEventListener("click", (event) => {
+
+    document.getElementById("dino-compare").style.display = "none";
+
+    console.log(humanObject);
 
     const gridContainer = document.getElementById("grid");
 
@@ -94,6 +96,7 @@ document.getElementById("btn").addEventListener("click", (event) => {
 
         dinos.splice(4, 0, humanObject);
 
+        console.log(dinos)
 
         dinos.forEach((element, index) => {
 
@@ -110,6 +113,7 @@ document.getElementById("btn").addEventListener("click", (event) => {
             gridItemParagraph.innerHTML = element.fact;
 
 
+
             // assign class for gridItem
             gridItem.classList.add("grid-item");
 
@@ -121,6 +125,7 @@ document.getElementById("btn").addEventListener("click", (event) => {
             gridContainer.appendChild(gridItem);
 
         });
+        console.log(humanObject);
     })
 
 
