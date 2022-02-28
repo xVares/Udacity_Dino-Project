@@ -9,9 +9,7 @@ async function dinoArray() {
 }
 
 
-console.log(dinoArray);
 
-console.log(typeof dinoArray);
 
 // Create Dino Constructor
 
@@ -31,12 +29,11 @@ class Dinosaur {
 
 // Create Human Object
 
-//! TODO: Fix facts in human class to display correct and set default parameter
+//! TODO: values are not retrieved by .value method
 class Human {
-    constructor(height, weight, diet, facts) {
+    constructor(species, height, weight, diet) {
 
-        this.species = "Human";
-        this.facts = "You";
+        this.species = species;
         this.height = height;
         this.weight = weight;
         this.diet = diet;
@@ -47,17 +44,14 @@ class Human {
 
 const humanObject = (function () {
 
-    let facts = document.getElementById("name").value;
-    let height = document.getElementById("feet").value * 12 + document.getElementById("inches").value;
-    let weight = document.getElementById("weight").value;
-    let diet = document.getElementById("diet").value;
+    let humanSpecies = document.getElementById("name").value;
+    let humanHeight = document.getElementById("feet").value * 12 + document.getElementById("inches").value;
+    let humanWeight = document.getElementById("weight").value;
+    let humanDiet = document.getElementById("diet").value;
 
-    return new Human(height, weight, diet, facts)
+    return new Human(humanSpecies, humanHeight, humanWeight, humanDiet)
 
 })();
-console.log(humanObject.facts)
-
-console.log(humanObject);
 
 // Create Dino Compare Method 1
 // TODO: compare height. 
@@ -83,7 +77,7 @@ console.log(humanObject);
 
 
 // Remove form from screen
-document.getElementById("btn").addEventListener("click", (event) => {
+document.getElementById("btn").addEventListener("click", () => {
     document.getElementById("dino-compare").innerHTML = "";
 })
 
@@ -100,7 +94,6 @@ document.getElementById("btn").addEventListener("click", (event) => {
 
         dinos.splice(4, 0, humanObject);
 
-        console.log(dinos)
 
         dinos.forEach((element, index) => {
 
@@ -113,7 +106,7 @@ document.getElementById("btn").addEventListener("click", (event) => {
 
             // set inner HTML & Attributes for elements: (<h3>, <img>, <p>) inside the gridItem
             gridItemHeader.innerHTML = element.species;
-            gridItemImage.setAttribute("src", `./images/${element.species}.png`);
+            // gridItemImage.setAttribute("src", `./images/${element.species}.png`);
             gridItemParagraph.innerHTML = element.fact;
 
 
