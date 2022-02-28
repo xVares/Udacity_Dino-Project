@@ -82,11 +82,9 @@ const humanObject = (function () {
 
 // On button click, prepare and display info graphic
 
-document.getElementById("btn").addEventListener("click", (event) => {
+document.getElementById("btn").addEventListener("click", () => {
 
     document.getElementById("dino-compare").style.display = "none";
-
-    console.log(humanObject);
 
     const gridContainer = document.getElementById("grid");
 
@@ -125,7 +123,6 @@ document.getElementById("btn").addEventListener("click", (event) => {
             gridContainer.appendChild(gridItem);
 
         });
-        console.log(humanObject);
     })
 
 
