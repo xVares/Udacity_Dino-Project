@@ -210,7 +210,7 @@ document.getElementById("btn").addEventListener("click", () => {
 
       // set inner HTML & Attr for dinos: (<h3>, <img>, <p>) inside the "gridItem"
       gridItemHeader.innerHTML = element.species;
-      gridItemImage.setAttribute("src", `./images/${element.species}.png`);
+      gridItemImage.setAttribute("src", `./images/${element.species.toLowerCase()}.png`);
       gridItemParagraph.innerHTML = element.fact;
 
       // set inner innerHTML & Attr for "humanObject" and innerHTML for "Pigeon"
