@@ -45,23 +45,24 @@ class Human {
 }
 
 // Function to get human data from form
-const humanObject = () => {
+const human = () => {
 
   let species = document.getElementById("name").value;
-  let height = document.getElementById("feet").value * 12 + document.getElementById("inches").value;
+  let height = (document.getElementById("feet").value) * 12 + (parseInt(document.getElementById("inches").value));
   let weight = document.getElementById("weight").value;
   let diet = document.getElementById("diet").value;
 
   return new Human(species, height, weight, diet)
 
-};
+}
 
-// Create Dino Compare Method 1
-// TODO: compare height. 
 
-const compareHeight = (dinoHeight, humanHeight) => {
+// Create Dino Compare Method 1 (height)
 
-  const ratio = Math.round(dinoHeight / humanHeight);
+let compareHeight = (dinoHeight, humanHeight) => {
+
+  const ratio = (dinoHeight / parseInt(humanHeight).toFixed(1));
+
 
   if (ratio === 1) {
 
@@ -69,27 +70,26 @@ const compareHeight = (dinoHeight, humanHeight) => {
 
   }
 
-  else if (ratio < 1) {
+  else if (ratio > 1) {
 
-    return `The dino is ${ratio}x taller than you are!`
+    return `The dino is ${ratio.toFixed(1)}x taller than you are!`
 
   }
 
-  else if (ratio > 1) {
+  else {
 
-    return `The dino is ${ratio}x smaller than you are!`
+    return `The dino is ${ratio.toFixed(1)}x smaller than you are!`
 
   }
 
 }
 
 
-// Create Dino Compare Method 2
-// TODO: compare weight. 
+// Create Dino Compare Method 2 (weight)
 
-const compareWeight = (dinoWeight, humanWeight) => {
+let compareWeight = (dinoWeight, humanWeight) => {
 
-  const ratio = Math.round(dinoWeight / humanWeight)
+  let ratio = (dinoWeight / parseInt(humanWeight));
 
   if (ratio === 1) {
 
@@ -97,15 +97,15 @@ const compareWeight = (dinoWeight, humanWeight) => {
 
   }
 
-  else if (ratio < 1) {
+  else if (ratio.toFixed(1) > 1) {
 
-    return `The dino is ${ratio}x heavier than you are!`
+    return `The dino is ${ratio.toFixed(1)}x heavier than you are!`
 
   }
 
-  else if (ratio > 1) {
+  else {
 
-    return `The dino is ${ratio}x lighter than you are!`
+    return `The dino is ${ratio.toFixed(1)}x lighter than you are!`
 
   }
 
@@ -114,19 +114,19 @@ const compareWeight = (dinoWeight, humanWeight) => {
 
 
 
-// Create Dino Compare Method 3
-// TODO: compare diet. 
-const compareDiet = (dinoDiet, humanDiet) => {
+// Create Dino Compare Method 3 (diet)
+
+let compareDiet = (dinoDiet, humanDiet) => {
 
   if (dinoDiet === humanDiet) {
 
-    return `You have the same diet!`
+    return `You and this dinosaur have the same diet!`
 
   }
 
   else {
 
-    return `Your diet is different! The dino's diet is ${dinoDiet} and your's is ${humanDiet}.`
+    return `The dino's and your diet are different!`
 
   }
 
@@ -134,67 +134,72 @@ const compareDiet = (dinoDiet, humanDiet) => {
 
 
 // Generate random number
-const randomNum = () => {
+
+let randomNum = () => {
 
   // generate random num -> round up to largest integer -> +1 otherwise range is only between 1-4
   return Math.floor(Math.random() * 5 + 1)
 
 }
 
-console.log(randomNum());
 
 
 // Generate random fact
 
+const randomFact = (dinoSpecies, dinoHeight, humanHeight, dinoWeight, humanWeight, dinoDiet, humanDiet, dinoWhere, dinoWhen) => {
 
+  switch (randomNum()) {
 
+    case 1:
+      return compareHeight(dinoHeight, humanHeight);
 
+    case 2:
+      return compareWeight(dinoWeight, humanWeight);
+
+    case 3:
+      return compareDiet(dinoDiet, humanDiet);
+
+    case 4:
+      return `The ${dinoSpecies} lived in the ${dinoWhere} time period.`;
+
+    case 5:
+      return `The ${dinoSpecies} used to live in ${dinoWhen}.`;
+
+  }
+
+}
 
 // On button click, prepare and display info graphic
 
 document.getElementById("btn").addEventListener("click", () => {
 
+
   // Remove form from screen
   document.getElementById("dino-compare").style.display = "none";
 
+  // declare "gridContainer"
   const gridContainer = document.getElementById("grid");
-
 
   // iterate over dinoArray with forEach
   dinoArray().then(res => {
 
+    // Create "dinos" array
+    let dinos = res.map(dino => new Dinosaur(
 
+      dino.species,
+      dino.weight,
+      dino.height,
+      dino.diet,
+      dino.where,
+      dino.when,
+      dino.fact
 
-    let dinos = res.map(dino => new Dinosaur(dino.species, dino.weight, dino.height, dino.diet, dino.where, dino.when, dino.fact));
+    ));
 
     // splice new "humanObject" so it gets displayed in the mid
-    dinos.splice(4, 0, humanObject());
+    dinos.splice(4, 0, human());
 
     dinos.forEach((element, index) => {
-
-      // random fact function
-      const randomFact = () => {
-
-        switch (randomNum()) {
-
-          case 1:
-            return compareHeight(element.height, humanObject.height);
-
-          case 2:
-            return compareWeight(element.weight, humanObject.weight);
-
-          case 3:
-            return compareDiet(element.diet, humanObject.diet);
-
-          case 4:
-            return `The ${element.species} lived in the ${element.when} time period.`;
-
-          case 5:
-            return `The ${element.species} used to live in ${element.where}.`;
-
-        }
-
-      }
 
       // create elements for "gridItem"
       const gridItem = document.createElement("div");
@@ -208,10 +213,25 @@ document.getElementById("btn").addEventListener("click", () => {
       gridItemParagraph.innerHTML = element.fact;
 
       // set inner innerHTML & Attr for "humanObject" and innerHTML for "Pigeon"
+      gridItemParagraph.innerHTML = randomFact(
+
+        element.species,
+        element.height,
+        human().height,
+        element.weight,
+        human().weight,
+        element.diet,
+        human().diet,
+        element.where,
+        element.when
+
+      );
+
       if (index === 4) {
 
+        // element.fact = ""
         gridItemImage.setAttribute("src", `./images/human.png`);
-        gridItemParagraph.innerHTML = randomFact();
+        gridItemParagraph.innerHTML = "You!"
 
       }
 
@@ -232,6 +252,7 @@ document.getElementById("btn").addEventListener("click", () => {
       gridContainer.appendChild(gridItem);
 
     });
+
   })
 
 })
