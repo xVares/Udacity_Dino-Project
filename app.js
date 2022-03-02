@@ -45,6 +45,7 @@ class Human {
 }
 
 // Function to get human data from form
+
 const human = () => {
 
   let species = document.getElementById("name").value;
