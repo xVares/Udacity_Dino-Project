@@ -25,6 +25,7 @@ class Dinosaur {
     this.where = where;
     this.when = when;
     this.fact = fact;
+
   }
 }
 
@@ -44,7 +45,7 @@ class Human {
 }
 
 // Function to get human data from form
-const humanObject = (function () {
+const humanObject = () => {
 
   let species = document.getElementById("name").value;
   let height = document.getElementById("feet").value * 12 + document.getElementById("inches").value;
@@ -53,28 +54,99 @@ const humanObject = (function () {
 
   return new Human(species, height, weight, diet)
 
-});
+};
 
 // Create Dino Compare Method 1
 // TODO: compare height. 
-let compareHeight = (dinoHeight, humanHeight) => {
 
-  const ratio = Math.round(dinoHeight / humanHeight)
+const compareHeight = (dinoHeight, humanHeight) => {
+
+  const ratio = Math.round(dinoHeight / humanHeight);
+
+  if (ratio === 1) {
+
+    return `You have the same height!`
+
+  }
+
+  else if (ratio < 1) {
+
+    return `The dino is ${ratio}x taller than you are!`
+
+  }
+
+  else if (ratio > 1) {
+
+    return `The dino is ${ratio}x smaller than you are!`
+
+  }
 
 }
 
 
 // Create Dino Compare Method 2
 // TODO: compare weight. 
-let compareWeight = (dinoWeight, humanWeight) => {
+
+const compareWeight = (dinoWeight, humanWeight) => {
 
   const ratio = Math.round(dinoWeight / humanWeight)
+
+  if (ratio === 1) {
+
+    return `You have the same weight!`
+
+  }
+
+  else if (ratio < 1) {
+
+    return `The dino is ${ratio}x heavier than you are!`
+
+  }
+
+  else if (ratio > 1) {
+
+    return `The dino is ${ratio}x lighter than you are!`
+
+  }
 
 }
 
 
+
+
 // Create Dino Compare Method 3
 // TODO: compare diet. 
+const compareDiet = (dinoDiet, humanDiet) => {
+
+  if (dinoDiet === humanDiet) {
+
+    return `You have the same diet!`
+
+  }
+
+  else {
+
+    return `Your diet is different! The dino's diet is ${dinoDiet} and your's is ${humanDiet}.`
+
+  }
+
+}
+
+
+// Generate random number
+const randomNum = () => {
+
+  // generate random num -> round up to largest integer -> +1 otherwise range is only between 1-4
+  return Math.floor(Math.random() * 5 + 1)
+
+}
+
+console.log(randomNum());
+
+
+// Generate random fact
+
+
 
 
 
@@ -91,12 +163,38 @@ document.getElementById("btn").addEventListener("click", () => {
   // iterate over dinoArray with forEach
   dinoArray().then(res => {
 
+
+
     let dinos = res.map(dino => new Dinosaur(dino.species, dino.weight, dino.height, dino.diet, dino.where, dino.when, dino.fact));
 
     // splice new "humanObject" so it gets displayed in the mid
     dinos.splice(4, 0, humanObject());
 
     dinos.forEach((element, index) => {
+
+      // random fact function
+      const randomFact = () => {
+
+        switch (randomNum()) {
+
+          case 1:
+            return compareHeight(element.height, humanObject.height);
+
+          case 2:
+            return compareWeight(element.weight, humanObject.weight);
+
+          case 3:
+            return compareDiet(element.diet, humanObject.diet);
+
+          case 4:
+            return `The ${element.species} lived in the ${element.when} time period.`;
+
+          case 5:
+            return `The ${element.species} used to live in ${element.where}.`;
+
+        }
+
+      }
 
       // create elements for "gridItem"
       const gridItem = document.createElement("div");
@@ -113,14 +211,13 @@ document.getElementById("btn").addEventListener("click", () => {
       if (index === 4) {
 
         gridItemImage.setAttribute("src", `./images/human.png`);
-        gridItemParagraph.innerHTML = "You!";
+        gridItemParagraph.innerHTML = randomFact();
 
       }
 
       if (element.species === "Pigeon") {
 
         gridItemParagraph.innerHTML = "All birds are Dinosaurs";
-        console.log(element);
 
       }
 
